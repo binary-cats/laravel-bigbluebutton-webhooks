@@ -19,7 +19,7 @@ abstract class Job
     protected $webhookCall;
 
     /**
-     * Location of the root
+     * Location of the root.
      *
      * @var string
      */
@@ -36,17 +36,17 @@ abstract class Job
     }
 
     /**
-     * Fetch Payload
+     * Fetch Payload.
      *
      * @return array
      */
-    protected function payload() : array
+    protected function payload(): array
     {
         return $this->webhookCall->payload;
     }
 
     /**
-     * Get the value from the payload's event data
+     * Get the value from the payload's event data.
      *
      * @param  string $key
      * @return mixed

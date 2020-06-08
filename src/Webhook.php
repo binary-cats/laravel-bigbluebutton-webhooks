@@ -2,8 +2,6 @@
 
 namespace BinaryCats\BigBlueButtonWebhooks;
 
-use Illuminate\Http\Request;
-
 class Webhook
 {
     /**

@@ -27,21 +27,21 @@ class BigBlueButtonWebhookCallTest extends TestCase
         $this->webhookCall = $model::create([
             'name' => 'bigbluebutton',
             'payload' => [
-                "event" => [
+                'event' => [
                     [
-                        "data" => [
-                            "type" => "event",
-                            "id" => "my.type",
-                            "attributes" => [
+                        'data' => [
+                            'type' => 'event',
+                            'id' => 'my.type',
+                            'attributes' => [
                             ],
-                            "event" => [
-                                "ts" => 1591652302962,
+                            'event' => [
+                                'ts' => 1591652302962,
                             ],
                         ],
                     ],
                 ],
-                "timestamp" => "1591652302965",
-                "domain" => "example.com",
+                'timestamp' => '1591652302965',
+                'domain' => 'example.com',
             ],
         ]);
 
