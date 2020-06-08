@@ -2,7 +2,6 @@
 
 namespace BinaryCats\BigBlueButtonWebhooks\Tests;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Spatie\WebhookClient\Models\WebhookCall;
@@ -29,7 +28,7 @@ class IntegrationTest extends TestCase
 
         $this
             ->withHeaders([
-                'Authorization' => 'Bearer '. $this->determineBigblueButtonsignature($payload),
+                'Authorization' => 'Bearer '.$this->determineBigblueButtonsignature($payload),
             ])
             ->post('bigbluebutton-webhooks', $payload)
             ->assertSuccessful();
@@ -75,7 +74,7 @@ class IntegrationTest extends TestCase
 
         $this
             ->withHeaders([
-                'Authorization' => 'Bearer '. $this->determineBigblueButtonsignature($payload),
+                'Authorization' => 'Bearer '.$this->determineBigblueButtonsignature($payload),
             ])
             ->post('bigbluebutton-webhooks', $payload)
             ->assertStatus(400);
@@ -86,7 +85,7 @@ class IntegrationTest extends TestCase
 
         $this->assertFalse(isset($webhookCall->payload['event'][0]['data']['id']));
         $this->assertEquals([
-            'invalid_payload'
+            'invalid_payload',
         ], $webhookCall->payload);
 
         $this->assertEquals('Webhook call id `1` did not contain a type. Valid BigBlueButton webhook calls should always contain a type.', $webhookCall->exception['message']);
