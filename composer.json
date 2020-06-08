@@ -1,0 +1,63 @@
+{
+    "name": "binary-cats/laravel-bigbluebutton-webhooks",
+    "description": "Handle BigBlueButton webhooks in a Laravel application",
+    "keywords": [
+        "binary-cats",
+        "laravel",
+        "bigbluebutton",
+        "webhooks"
+    ],
+    "homepage": "https://github.com/binary-cats/laravel-bigbluebutton-webhooks",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cyrill Kalita",
+            "email": "cyrill.kalita@gmail.com",
+            "homepage": "https://github.com/binary-cats",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/support": "~5.8.0|^6.0|^7.0",
+        "spatie/laravel-webhook-client": "^2.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.8.0|^4.0|^5.0",
+        "phpunit/phpunit": "^8.2|^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BinaryCats\\BigBlueButtonWebhooks\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BinaryCats\\BigBlueButtonWebhooks\\Tests\\": "tests"
+        }
+    },
+    "suggest": {
+            "binary-cats/laravel-mailgun-webhooks": "^1.0"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --color=always",
+        "check": [
+            "php-cs-fixer fix --ansi --dry-run --diff",
+            "phpcs --report-width=200 --report-summary  --report-full src/ tests/ --standard=PSR2 -n",
+            "phpmd src/,tests/ text ./phpmd.xml.dist"
+        ],
+        "fix": [
+            "php-cs-fixer fix --ansi"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "BinaryCats\\BigBlueButtonWebhooks\\BigBlueButtonWebhooksServiceProvider"
+            ]
+        }
+    }
+}
