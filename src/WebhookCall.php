@@ -9,7 +9,7 @@ use Spatie\WebhookClient\WebhookConfig;
 
 class WebhookCall extends Model
 {
-    public static function storeWebhook(WebhookConfig $config, Request $request): self
+    public static function storeWebhook(WebhookConfig $config, Request $request): Model
     {
         // payload is not proper JSON, rather is it split between three blocks
         $payload = $request->input();
