@@ -39,6 +39,8 @@ class BigBlueButtonSignatureValidator implements SignatureValidator
         try {
             Webhook::constructEvent($request->all(), $signature, $secret);
         } catch (Exception $exception) {
+            report ($exception);
+
             return false;
         }
         // default
