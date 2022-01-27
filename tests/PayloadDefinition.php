@@ -1,11 +1,11 @@
 <?php
 
-namespace BinaryCats\BigBlueButtonWebhooks\Tests;
+namespace Tests;
 
 class PayloadDefinition
 {
     /**
-     * Given the compexity of the payload, let's put is all into the same method.
+     * @return array
      */
     public static function getPayloadDefinition(): array
     {

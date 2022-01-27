@@ -1,6 +1,6 @@
 <?php
 
-namespace BinaryCats\BigBlueButtonWebhooks\Tests;
+namespace Tests;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;

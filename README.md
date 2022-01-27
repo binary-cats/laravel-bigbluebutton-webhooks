@@ -40,6 +40,9 @@ return [
     /*
      * You can define the job that should be run when a certain webhook hits your application
      * here. The key is the name of the BigBlueButton event type with the `.` replaced by a `_`.
+     * 
+     * The package will automatically convert the keys to lowercase, but you should
+     * be cognisant of the fact that array keys are case-sensitive
      */
     'jobs' => [
         'meeting-created' => \BinaryCats\BigBlueButtonWebhooks\Jobs\MeetingCreatedJob::class,
@@ -102,6 +105,8 @@ Unless something goes terribly wrong, this package will always respond with a `2
 
 If the signature is not valid, the request will NOT be logged in the `webhook_calls` table but a `BinaryCats\BigBlueButtonWebhooks\Exceptions\WebhookFailed` exception will be thrown.
 If something goes wrong during the webhook request the thrown exception will be saved in the `exception` column. In that case the controller will send a `500` instead of `200`.
+
+**The package will ALWAYS cast events to lowercase - so your configured keys must be lowercase, too**
 
 **N.B.: According to the docs:**
 

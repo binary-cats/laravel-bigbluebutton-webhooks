@@ -1,6 +1,6 @@
 <?php
 
-namespace BinaryCats\BigBlueButtonWebhooks\Tests;
+namespace Tests;
 
 use BinaryCats\BigBlueButtonWebhooks\ProcessBigBlueButtonWebhookJob;
 use Illuminate\Support\Facades\Event;
@@ -43,6 +43,7 @@ class BigBlueButtonWebhookCallTest extends TestCase
                 'timestamp' => '1591652302965',
                 'domain' => 'example.com',
             ],
+            'url' => '/webhooks/bigbluebutton',
         ]);
 
         $this->processBigblueButtonwEbhookJob = new ProcessBigBlueButtonWebhookJob($this->webhookCall);

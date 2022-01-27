@@ -1,6 +1,6 @@
 <?php
 
-namespace BinaryCats\BigBlueButtonWebhooks\Tests;
+namespace Tests;
 
 use BinaryCats\BigBlueButtonWebhooks\BigBlueButtonWebhooksServiceProvider;
 use CreateWebhookCallsTable;
@@ -25,21 +25,23 @@ abstract class TestCase extends OrchestraTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('database.default', 'sqlite');
-        $app['config']->set('database.connections.sqlite', [
+        config()->set('database.default', 'sqlite');
+        config()->set('database.connections.sqlite', [
             'driver'   => 'sqlite',
             'database' => ':memory:',
             'prefix'   => '',
         ]);
-
-        config(['bigbluebutton-webhooks.signing_secret' => 'test_signing_secret']);
+        config()->set('bigbluebutton-webhooks.signing_secret', 'test_signing_secret');
     }
 
+    /**
+     * @return void
+     */
     protected function setUpDatabase()
     {
-        include_once __DIR__.'/../vendor/spatie/laravel-webhook-client/database/migrations/create_webhook_calls_table.php.stub';
+        $migration = include __DIR__.'/../vendor/spatie/laravel-webhook-client/database/migrations/create_webhook_calls_table.php.stub';
 
-        (new CreateWebhookCallsTable())->up();
+        $migration->up();
     }
 
     /**
