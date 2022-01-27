@@ -19,7 +19,7 @@ class BigBlueButtonSignatureValidator implements SignatureValidator
     public function isValid(Request $request, WebhookConfig $config): bool
     {
         // idenfity signature
-        $signature = $request->bearerToken() ?? '';
+        $signature = $request->bearerToken();
         // "pretend" to fetch secret
         $secret = $config->signingSecret;
         // For the webhooks with a signature
