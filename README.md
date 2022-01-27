@@ -112,6 +112,12 @@ If something goes wrong during the webhook request the thrown exception will be 
 
 > Hooks are only removed if a call to /hooks/destroy is made or if the callbacks for the hook fail too many times (~12) for a long period of time (~5min).
 
+**N.N.B.: Payload structure:**
+
+> The payload that is sent from BigBlueButton is sort of split between into three sections. 
+> Out of the box the package will store whatever BBB sends back to you within payload via `$request->input()`. 
+> If you want to transform the payload, you may want to use custom model. [Advanced Usage](#advanced-usage)
+
 There are two ways this package enables you to handle webhook requests: you can opt to queue a job or listen to the events the package will fire.
 
 ### Handling webhook requests using jobs
@@ -210,6 +216,46 @@ Spatie highly recommends that you make the event listener queueable, as this wil
 The above example is only one way to handle events in Laravel. To learn the other options, read [the Laravel documentation on handling events](https://laravel.com/docs/7.x/events).
 
 ## Advanced usage
+
+### Transforming the payload
+
+If you want to change how the payload is saved into the database, for instance, to have the `event` name as a top tier element, you may want to use custom model:
+
+```php
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Spatie\WebhookClient\Models\WebhookCall as Model;
+use Spatie\WebhookClient\WebhookConfig;
+
+class WebhookCall extends Model
+{
+    /**
+     * @param  \Spatie\WebhookClient\WebhookConfig  $config
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Spatie\WebhookClient\Models\WebhookCall
+     */
+    public static function storeWebhook(WebhookConfig $config, Request $request): Model
+    {
+        // bigblubutton payload is build in expectation of multiple events
+        $payload = $request->input();
+        // transform event
+        if ($event = Arr::get($payload, 'event', null) and is_string($event)) {
+            $payload['event'] = json_decode($event, true);
+        }
+        // take the headers form the top
+        $headers = self::headersToStore($config, $request);
+        // parse and return
+        return self::create([
+            'name' => $config->name,
+            'url' => $request->fullUrl(),
+            'headers' => $headers,
+            'payload' => $payload,
+        ]);
+    }
+}
+```
+
+and register it in `bitbluebutton-webhooks.model` config key. The above example is based on
 
 ### Retry handling a webhook
 

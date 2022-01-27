@@ -14,6 +14,9 @@ class BigBlueButtonWebhookCallTest extends TestCase
     /** @var \Spatie\WebhookClient\Models\WebhookCall */
     public $webhookCall;
 
+    /**
+     * @return void
+     */
     public function setUp(): void
     {
         parent::setUp();

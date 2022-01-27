@@ -8,6 +8,10 @@ use Spatie\WebhookClient\Models\WebhookCall;
 
 class IntegrationTest extends TestCase
 {
+    /**
+     * @return void
+     * @throws \Exception
+     */
     public function setUp(): void
     {
         parent::setUp();
@@ -37,7 +41,6 @@ class IntegrationTest extends TestCase
 
         $webhookCall = WebhookCall::first();
 
-        $this->assertEquals('my.type', $webhookCall->payload['event'][0]['data']['id']);
         $this->assertEquals($payload, $webhookCall->payload);
         $this->assertNull($webhookCall->exception);
 

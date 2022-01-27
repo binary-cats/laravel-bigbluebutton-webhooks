@@ -46,8 +46,7 @@ abstract class TestCase extends OrchestraTestCase
 
     /**
      * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
+     * @return string[]
      */
     protected function getPackageProviders($app)
     {
@@ -56,6 +55,9 @@ abstract class TestCase extends OrchestraTestCase
         ];
     }
 
+    /**
+     * @return void
+     */
     protected function disableExceptionHandling()
     {
         $this->app->instance(ExceptionHandler::class, new class extends Handler
@@ -75,6 +77,11 @@ abstract class TestCase extends OrchestraTestCase
         });
     }
 
+    /**
+     * @param  array  $payload
+     * @param  string|null  $configKey
+     * @return string
+     */
     protected function determineBigBlueButtonSignature(array $payload, string $configKey = null): string
     {
         $secret = ($configKey) ?

@@ -14,7 +14,7 @@ class BigBlueButtonWebhooksController
      *
      * @param  \Illuminate\Http\Request $request
      * @param  string|null $configKey
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function __invoke(Request $request, string $configKey = null)
     {
@@ -30,8 +30,6 @@ class BigBlueButtonWebhooksController
             'process_webhook_job' => config('bigbluebutton-webhooks.process_webhook_job'),
         ]);
 
-        (new WebhookProcessor($request, $webhookConfig))->process();
-
-        return response()->json(['message' => 'ok']);
+        return (new WebhookProcessor($request, $webhookConfig))->process();
     }
 }
