@@ -2,7 +2,6 @@
 
 namespace BinaryCats\BigBlueButtonWebhooks\Jobs;
 
-use ArrayAccess;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
@@ -29,7 +28,7 @@ abstract class Job
     /**
      * Create new Job.
      *
-     * @param \Spatie\WebhookClient\Models\WebhookCall $webhookCall
+     * @param  \Spatie\WebhookClient\Models\WebhookCall  $webhookCall
      */
     public function __construct(WebhookCall $webhookCall)
     {
@@ -48,7 +47,7 @@ abstract class Job
 
     /**
      * @param  string  $key
-     * @param mixed $default
+     * @param  mixed  $default
      * @return array|\ArrayAccess|mixed
      */
     public function get(string $key, $default = null)

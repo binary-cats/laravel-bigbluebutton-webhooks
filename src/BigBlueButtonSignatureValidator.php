@@ -12,8 +12,8 @@ class BigBlueButtonSignatureValidator implements SignatureValidator
     /**
      * True if the signature has been valiates.
      *
-     * @param  \Illuminate\Http\Request       $request
-     * @param  \Spatie\WebhookClient\WebhookConfig $config
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Spatie\WebhookClient\WebhookConfig  $config
      * @return bool
      */
     public function isValid(Request $request, WebhookConfig $config): bool
@@ -27,6 +27,7 @@ class BigBlueButtonSignatureValidator implements SignatureValidator
             Webhook::constructEvent($request->all(), $signature, $secret);
         } catch (Exception $exception) {
             report($exception);
+
             return false;
         }
         // default
