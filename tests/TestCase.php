@@ -1,9 +1,8 @@
 <?php
 
-namespace BinaryCats\BigBlueButtonWebhooks\Tests;
+namespace Tests;
 
 use BinaryCats\BigBlueButtonWebhooks\BigBlueButtonWebhooksServiceProvider;
-use CreateWebhookCallsTable;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
@@ -21,31 +20,32 @@ abstract class TestCase extends OrchestraTestCase
     /**
      * Set up the environment.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('database.default', 'sqlite');
-        $app['config']->set('database.connections.sqlite', [
+        config()->set('database.default', 'sqlite');
+        config()->set('database.connections.sqlite', [
             'driver'   => 'sqlite',
             'database' => ':memory:',
             'prefix'   => '',
         ]);
-
-        config(['bigbluebutton-webhooks.signing_secret' => 'test_signing_secret']);
-    }
-
-    protected function setUpDatabase()
-    {
-        include_once __DIR__.'/../vendor/spatie/laravel-webhook-client/database/migrations/create_webhook_calls_table.php.stub';
-
-        (new CreateWebhookCallsTable())->up();
+        config()->set('bigbluebutton-webhooks.signing_secret', 'test_signing_secret');
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
-     *
-     * @return array
+     * @return void
+     */
+    protected function setUpDatabase()
+    {
+        $migration = include __DIR__.'/../vendor/spatie/laravel-webhook-client/database/migrations/create_webhook_calls_table.php.stub';
+
+        $migration->up();
+    }
+
+    /**
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return string[]
      */
     protected function getPackageProviders($app)
     {
@@ -54,6 +54,9 @@ abstract class TestCase extends OrchestraTestCase
         ];
     }
 
+    /**
+     * @return void
+     */
     protected function disableExceptionHandling()
     {
         $this->app->instance(ExceptionHandler::class, new class extends Handler
@@ -73,6 +76,11 @@ abstract class TestCase extends OrchestraTestCase
         });
     }
 
+    /**
+     * @param  array  $payload
+     * @param  string|null  $configKey
+     * @return string
+     */
     protected function determineBigBlueButtonSignature(array $payload, string $configKey = null): string
     {
         $secret = ($configKey) ?

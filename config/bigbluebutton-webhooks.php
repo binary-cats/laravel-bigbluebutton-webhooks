@@ -10,6 +10,9 @@ return [
     /*
      * You can define the job that should be run when a certain webhook hits your application
      * here. The key is the name of the BigBlueButton event type with the `.` replaced by a `_`.
+     *
+     * The package will automatically convert the keys to lowercase, but you should
+     * be cognisant of the fact that array keys are case-sensitive
      */
     'jobs' => [
         // 'meeting-created' => \BinaryCats\BigBlueButtonWebhooks\Jobs\MeetingCreatedJob::class,

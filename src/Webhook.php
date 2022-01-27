@@ -7,10 +7,10 @@ class Webhook
     /**
      * Validate and raise an appropriate event.
      *
-     * @param  array $payload
-     * @param  string $signature
-     * @param  string $secret
-     * @return BinaryCats\BigBlueButtonWebhooks\Event
+     * @param  mixed[]  $payload
+     * @param  string  $signature
+     * @param  string  $secret
+     * @return \BinaryCats\BigBlueButtonWebhooks\Event
      */
     public static function constructEvent(array $payload, string $signature, string $secret): Event
     {

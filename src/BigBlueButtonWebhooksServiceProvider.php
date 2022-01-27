@@ -20,9 +20,7 @@ class BigBlueButtonWebhooksServiceProvider extends ServiceProvider
             ], 'config');
         }
 
-        Route::macro('bigbluebuttonWebhooks', function ($url) {
-            return Route::post($url, '\BinaryCats\BigBlueButtonWebhooks\BigBlueButtonWebhooksController');
-        });
+        Route::macro('bigbluebuttonWebhooks', fn ($url) => Route::post($url, BigBlueButtonWebhooksController::class));
     }
 
     /**

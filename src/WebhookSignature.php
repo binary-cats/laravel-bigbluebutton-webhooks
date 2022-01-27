@@ -2,27 +2,27 @@
 
 namespace BinaryCats\BigBlueButtonWebhooks;
 
-class WebhookSignature
+final class WebhookSignature
 {
     /**
      * Signature.
      *
      * @var string
      */
-    protected $signature;
+    protected string $signature;
 
     /**
      * Signature secret.
      *
      * @var string
      */
-    protected $secret;
+    protected string $secret;
 
     /**
      * Create new Signature.
      *
-     * @param array  $signatureArray
-     * @param string $secret
+     * @param  string  $signature
+     * @param  string  $secret
      */
     public function __construct(string $signature, string $secret)
     {
@@ -33,7 +33,7 @@ class WebhookSignature
     /**
      * Statis accessor into the class constructor.
      *
-     * @param  string $secret
+     * @param  string  $secret
      * @return WebhookSignature static
      */
     public static function make(string $signature, string $secret)

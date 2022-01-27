@@ -4,6 +4,7 @@
     "keywords": [
         "binary-cats",
         "laravel",
+        "bbb",
         "bigbluebutton",
         "webhooks"
     ],
@@ -18,42 +19,40 @@
         }
     ],
     "require": {
-        "php": "^7.2||^8.0",
-        "illuminate/support": "~5.8.0|^6.0|^7.0|^8.0",
-        "spatie/laravel-webhook-client": "^2.0"
+        "php": "^8.0",
+        "illuminate/support": "^8.0|^9.0",
+        "spatie/laravel-webhook-client": "^3.0"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.8.0|^4.0|^5.0|^6.0",
-        "phpunit/phpunit": "^8.2|^9.0"
+        "orchestra/testbench": "^6.0|^7.0",
+        "phpunit/phpunit": "^9.4"
     },
     "autoload": {
         "psr-4": {
-            "BinaryCats\\BigBlueButtonWebhooks\\": "src"
+            "BinaryCats\\BigBlueButtonWebhooks\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "BinaryCats\\BigBlueButtonWebhooks\\Tests\\": "tests"
+            "Tests\\": "tests/"
         }
     },
     "suggest": {
-            "binary-cats/laravel-mailgun-webhooks": "^1.0"
+            "binary-cats/laravel-lob-webhooks": "Handle lob.com webhooks in your Laravel application",
+            "binary-cats/laravel-mailgun-webhooks": "Handle mailgun.com webhooks in your Laravel application"
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --color=always",
-        "check": [
-            "php-cs-fixer fix --ansi --dry-run --diff",
-            "phpcs --report-width=200 --report-summary  --report-full src/ tests/ --standard=PSR2 -n",
-            "phpmd src/,tests/ text ./phpmd.xml.dist"
-        ],
-        "fix": [
-            "php-cs-fixer fix --ansi"
-        ]
+        "coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage -d pcov.enabled",
+        "test": "./vendor/bin/phpunit --color=always -vvv"
     },
     "config": {
+        "optimize-autoloader": true,
         "sort-packages": true
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "9.x-dev"
+        },
         "laravel": {
             "providers": [
                 "BinaryCats\\BigBlueButtonWebhooks\\BigBlueButtonWebhooksServiceProvider"

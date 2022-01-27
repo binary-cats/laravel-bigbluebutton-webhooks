@@ -4,7 +4,8 @@ namespace BinaryCats\BigBlueButtonWebhooks;
 
 use BinaryCats\BigBlueButtonWebhooks\Exceptions\WebhookFailed;
 use Illuminate\Support\Arr;
-use Spatie\WebhookClient\ProcessWebhookJob;
+use Illuminate\Support\Str;
+use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class ProcessBigBlueButtonWebhookJob extends ProcessWebhookJob
 {
@@ -28,7 +29,7 @@ class ProcessBigBlueButtonWebhookJob extends ProcessWebhookJob
             throw WebhookFailed::missingType($this->webhookCall);
         }
 
-        event("bigbluebutton-webhooks::{$type}", $this->webhookCall);
+        event($this->determineEventKey($type), $this->webhookCall);
 
         $jobClass = $this->determineJobClass($type);
 
@@ -43,10 +44,35 @@ class ProcessBigBlueButtonWebhookJob extends ProcessWebhookJob
         dispatch(new $jobClass($this->webhookCall));
     }
 
+    /**
+     * @param  string  $eventType
+     * @return string
+     */
     protected function determineJobClass(string $eventType): string
     {
-        $jobConfigKey = str_replace('.', '_', $eventType);
+        return config($this->determineJobConfigKey($eventType), '');
+    }
 
-        return config("bigbluebutton-webhooks.jobs.{$jobConfigKey}", '');
+    /**
+     * @param  string  $eventType
+     * @return string
+     */
+    protected function determineJobConfigKey(string $eventType): string
+    {
+        return Str::of($eventType)
+            ->replace('.', '_')
+            ->prepend('bigbluebutton-webhooks.jobs.')
+            ->lower();
+    }
+
+    /**
+     * @param  string  $eventType
+     * @return string
+     */
+    protected function determineEventKey(string $eventType): string
+    {
+        return Str::of($eventType)
+            ->prepend('bigbluebutton-webhooks::')
+            ->lower();
     }
 }

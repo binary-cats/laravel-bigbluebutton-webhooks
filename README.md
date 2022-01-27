@@ -40,6 +40,9 @@ return [
     /*
      * You can define the job that should be run when a certain webhook hits your application
      * here. The key is the name of the BigBlueButton event type with the `.` replaced by a `_`.
+     * 
+     * The package will automatically convert the keys to lowercase, but you should
+     * be cognisant of the fact that array keys are case-sensitive
      */
     'jobs' => [
         'meeting-created' => \BinaryCats\BigBlueButtonWebhooks\Jobs\MeetingCreatedJob::class,
@@ -103,9 +106,17 @@ Unless something goes terribly wrong, this package will always respond with a `2
 If the signature is not valid, the request will NOT be logged in the `webhook_calls` table but a `BinaryCats\BigBlueButtonWebhooks\Exceptions\WebhookFailed` exception will be thrown.
 If something goes wrong during the webhook request the thrown exception will be saved in the `exception` column. In that case the controller will send a `500` instead of `200`.
 
+**The package will ALWAYS cast events to lowercase - so your configured keys must be lowercase, too**
+
 **N.B.: According to the docs:**
 
 > Hooks are only removed if a call to /hooks/destroy is made or if the callbacks for the hook fail too many times (~12) for a long period of time (~5min).
+
+**N.N.B.: Payload structure:**
+
+> The payload that is sent from BigBlueButton is sort of split between into three sections. 
+> Out of the box the package will store whatever BBB sends back to you within payload via `$request->input()`. 
+> If you want to transform the payload, you may want to use custom model. [Advanced Usage](#advanced-usage)
 
 There are two ways this package enables you to handle webhook requests: you can opt to queue a job or listen to the events the package will fire.
 
@@ -205,6 +216,46 @@ Spatie highly recommends that you make the event listener queueable, as this wil
 The above example is only one way to handle events in Laravel. To learn the other options, read [the Laravel documentation on handling events](https://laravel.com/docs/7.x/events).
 
 ## Advanced usage
+
+### Transforming the payload
+
+If you want to change how the payload is saved into the database, for instance, to have the `event` name as a top tier element, you may want to use custom model:
+
+```php
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Spatie\WebhookClient\Models\WebhookCall as Model;
+use Spatie\WebhookClient\WebhookConfig;
+
+class WebhookCall extends Model
+{
+    /**
+     * @param  \Spatie\WebhookClient\WebhookConfig  $config
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Spatie\WebhookClient\Models\WebhookCall
+     */
+    public static function storeWebhook(WebhookConfig $config, Request $request): Model
+    {
+        // bigblubutton payload is build in expectation of multiple events
+        $payload = $request->input();
+        // transform event
+        if ($event = Arr::get($payload, 'event', null) and is_string($event)) {
+            $payload['event'] = json_decode($event, true);
+        }
+        // take the headers form the top
+        $headers = self::headersToStore($config, $request);
+        // parse and return
+        return self::create([
+            'name' => $config->name,
+            'url' => $request->fullUrl(),
+            'headers' => $headers,
+            'payload' => $payload,
+        ]);
+    }
+}
+```
+
+and register it in `bitbluebutton-webhooks.model` config key. The above example is based on
 
 ### Retry handling a webhook
 

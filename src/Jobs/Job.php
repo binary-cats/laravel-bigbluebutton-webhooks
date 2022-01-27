@@ -14,21 +14,21 @@ abstract class Job
     /**
      * Bind the implementation.
      *
-     * @var Spatie\WebhookClient\Models\WebhookCall
+     * @var \Spatie\WebhookClient\Models\WebhookCall
      */
-    protected $webhookCall;
+    protected WebhookCall $webhookCall;
 
     /**
      * Location of the root.
      *
      * @var string
      */
-    protected $root = 'event.0.data';
+    protected string $root = 'event.0.data';
 
     /**
      * Create new Job.
      *
-     * @param Spatie\WebhookClient\Models\WebhookCall $webhookCall
+     * @param  \Spatie\WebhookClient\Models\WebhookCall  $webhookCall
      */
     public function __construct(WebhookCall $webhookCall)
     {
@@ -38,7 +38,7 @@ abstract class Job
     /**
      * Fetch Payload.
      *
-     * @return array
+     * @return mixed[]
      */
     protected function payload(): array
     {
@@ -46,12 +46,11 @@ abstract class Job
     }
 
     /**
-     * Get the value from the payload's event data.
-     *
-     * @param  string $key
-     * @return mixed
+     * @param  string  $key
+     * @param  mixed  $default
+     * @return array|\ArrayAccess|mixed
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         return Arr::get($this->payload(), "{$this->root}.{$key}", $default);
     }

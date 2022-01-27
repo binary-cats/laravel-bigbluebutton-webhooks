@@ -4,19 +4,19 @@ namespace BinaryCats\BigBlueButtonWebhooks;
 
 use BinaryCats\BigBlueButtonWebhooks\Contracts\WebhookEvent;
 
-class Event implements WebhookEvent
+final class Event implements WebhookEvent
 {
     /**
      * Attributes from the event.
      *
-     * @var array
+     * @var string[]
      */
     public $attributes = [];
 
     /**
      * Create new Event.
      *
-     * @param array $attributes
+     * @param  string[]  $attributes
      */
     public function __construct($attributes)
     {
@@ -24,11 +24,10 @@ class Event implements WebhookEvent
     }
 
     /**
-     * Construct the event.
-     *
-     * @return Event
+     * @param  mixed[]  $data
+     * @return static
      */
-    public static function constructFrom($data): self
+    public static function constructFrom(array $data): self
     {
         return new static($data);
     }
