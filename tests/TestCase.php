@@ -3,7 +3,6 @@
 namespace Tests;
 
 use BinaryCats\BigBlueButtonWebhooks\BigBlueButtonWebhooksServiceProvider;
-use CreateWebhookCallsTable;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
@@ -21,7 +20,7 @@ abstract class TestCase extends OrchestraTestCase
     /**
      * Set up the environment.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -45,7 +44,7 @@ abstract class TestCase extends OrchestraTestCase
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @return string[]
      */
     protected function getPackageProviders($app)

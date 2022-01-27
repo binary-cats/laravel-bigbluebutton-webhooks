@@ -19,7 +19,7 @@ final class WebhookSignature
     protected string $secret;
 
     /**
-     * Create new Signature
+     * Create new Signature.
      *
      * @param  string  $signature
      * @param  string  $secret
@@ -33,7 +33,7 @@ final class WebhookSignature
     /**
      * Statis accessor into the class constructor.
      *
-     * @param  string $secret
+     * @param  string  $secret
      * @return WebhookSignature static
      */
     public static function make(string $signature, string $secret)

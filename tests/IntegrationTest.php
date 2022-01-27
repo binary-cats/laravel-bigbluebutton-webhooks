@@ -10,6 +10,7 @@ class IntegrationTest extends TestCase
 {
     /**
      * @return void
+     *
      * @throws \Exception
      */
     public function setUp(): void
