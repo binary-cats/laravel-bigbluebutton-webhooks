@@ -9,7 +9,8 @@ use Spatie\WebhookClient\Models\WebhookCall;
 
 abstract class Job
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     /**
      * Bind the implementation.
