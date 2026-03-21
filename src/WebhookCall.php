@@ -24,6 +24,7 @@ class WebhookCall extends Model
         }
         // take the headers form the top
         $headers = self::headersToStore($config, $request);
+
         // parse and return
         return self::create([
             'name' => $config->name,

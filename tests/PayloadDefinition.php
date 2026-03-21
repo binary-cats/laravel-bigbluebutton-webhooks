@@ -4,9 +4,6 @@ namespace Tests;
 
 class PayloadDefinition
 {
-    /**
-     * @return array
-     */
     public static function getPayloadDefinition(): array
     {
         return [

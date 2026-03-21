@@ -10,7 +10,7 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 abstract class TestCase extends OrchestraTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -22,21 +22,18 @@ abstract class TestCase extends OrchestraTestCase
      *
      * @param  \Illuminate\Foundation\Application  $app
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'sqlite');
         config()->set('database.connections.sqlite', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
         config()->set('bigbluebutton-webhooks.signing_secret', 'test_signing_secret');
     }
 
-    /**
-     * @return void
-     */
-    protected function setUpDatabase()
+    protected function setUpDatabase(): void
     {
         $migration = include __DIR__.'/../vendor/spatie/laravel-webhook-client/database/migrations/create_webhook_calls_table.php.stub';
 
@@ -47,19 +44,17 @@ abstract class TestCase extends OrchestraTestCase
      * @param  \Illuminate\Foundation\Application  $app
      * @return string[]
      */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             BigBlueButtonWebhooksServiceProvider::class,
         ];
     }
 
-    /**
-     * @return void
-     */
-    protected function disableExceptionHandling()
+    protected function disableExceptionHandling(): void
     {
-        $this->app->instance(ExceptionHandler::class, new class () extends Handler {
+        $this->app->instance(ExceptionHandler::class, new class() extends Handler
+        {
             public function __construct()
             {
             }
@@ -76,11 +71,9 @@ abstract class TestCase extends OrchestraTestCase
     }
 
     /**
-     * @param  array  $payload
-     * @param  string|null  $configKey
-     * @return string
+     * Determine the signature for a given payload and config key.
      */
-    protected function determineBigBlueButtonSignature(array $payload, string $configKey = null): string
+    protected function determineBigBlueButtonSignature(array $payload = [], ?string $configKey = null): string
     {
         $secret = ($configKey) ?
             config("bigbluebutton-webhooks.signing_secret_{$configKey}") :

@@ -16,7 +16,7 @@ class BigBlueButtonWebhooksController
      * @param  string|null  $configKey
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function __invoke(Request $request, string $configKey = null)
+    public function __invoke(Request $request, ?string $configKey = null)
     {
         $webhookConfig = new WebhookConfig([
             'name' => 'bigbluebutton',

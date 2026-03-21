@@ -4,6 +4,7 @@ namespace Tests;
 
 use BinaryCats\BigBlueButtonWebhooks\ProcessBigBlueButtonWebhookJob;
 use Illuminate\Support\Facades\Event;
+use PHPUnit\Framework\Attributes\Test;
 use Spatie\WebhookClient\Models\WebhookCall;
 
 class BigBlueButtonWebhookCallTest extends TestCase
@@ -17,7 +18,7 @@ class BigBlueButtonWebhookCallTest extends TestCase
     /**
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -52,16 +53,16 @@ class BigBlueButtonWebhookCallTest extends TestCase
         $this->processBigblueButtonwEbhookJob = new ProcessBigBlueButtonWebhookJob($this->webhookCall);
     }
 
-    /** @test */
-    public function it_will_fire_off_the_configured_job()
+    #[Test]
+    public function it_will_fire_off_the_configured_job(): void
     {
         $this->processBigblueButtonwEbhookJob->handle();
 
         $this->assertEquals($this->webhookCall->id, cache('dummyjob')->id);
     }
 
-    /** @test */
-    public function it_will_not_dispatch_a_job_for_another_type()
+    #[Test]
+    public function it_will_not_dispatch_a_job_for_another_type(): void
     {
         config(['bigbluebutton-webhooks.jobs' => ['another_type' => DummyJob::class]]);
 
@@ -70,8 +71,8 @@ class BigBlueButtonWebhookCallTest extends TestCase
         $this->assertNull(cache('dummyjob'));
     }
 
-    /** @test */
-    public function it_will_not_dispatch_jobs_when_no_jobs_are_configured()
+    #[Test]
+    public function it_will_not_dispatch_jobs_when_no_jobs_are_configured(): void
     {
         config(['bigbluebutton-webhooks.jobs' => []]);
 
@@ -80,8 +81,8 @@ class BigBlueButtonWebhookCallTest extends TestCase
         $this->assertNull(cache('dummyjob'));
     }
 
-    /** @test */
-    public function it_will_dispatch_events_even_when_no_corresponding_job_is_configured()
+    #[Test]
+    public function it_will_dispatch_events_even_when_no_corresponding_job_is_configured(): void
     {
         config(['bigbluebutton-webhooks.jobs' => ['another_type' => DummyJob::class]]);
 
