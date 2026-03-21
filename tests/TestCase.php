@@ -26,9 +26,9 @@ abstract class TestCase extends OrchestraTestCase
     {
         config()->set('database.default', 'sqlite');
         config()->set('database.connections.sqlite', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
         config()->set('bigbluebutton-webhooks.signing_secret', 'test_signing_secret');
     }
@@ -53,7 +53,8 @@ abstract class TestCase extends OrchestraTestCase
 
     protected function disableExceptionHandling(): void
     {
-        $this->app->instance(ExceptionHandler::class, new class () extends Handler {
+        $this->app->instance(ExceptionHandler::class, new class() extends Handler
+        {
             public function __construct()
             {
             }

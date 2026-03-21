@@ -4,8 +4,8 @@ namespace Tests;
 
 use BinaryCats\BigBlueButtonWebhooks\ProcessBigBlueButtonWebhookJob;
 use Illuminate\Support\Facades\Event;
-use Spatie\WebhookClient\Models\WebhookCall;
 use PHPUnit\Framework\Attributes\Test;
+use Spatie\WebhookClient\Models\WebhookCall;
 
 class BigBlueButtonWebhookCallTest extends TestCase
 {
