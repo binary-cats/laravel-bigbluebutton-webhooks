@@ -1,6 +1,6 @@
 # Handle BigBlueButton Webhooks in a Laravel application
 
-![https://github.com/binary-cats/laravel-bigbluebutton-webhooks/actions](https://github.com/binary-cats/laravel-bigbluebutton-webhooks/workflows/Laravel/badge.svg)
+![https://github.com/binary-cats/laravel-bigbluebutton-webhooks/actions](https://github.com/binary-cats/laravel-bigbluebutton-webhooks/workflows/run-tests/badge.svg)
 ![https://github.styleci.io/repos/270848719](https://github.styleci.io/repos/270848719/shield)
 ![https://scrutinizer-ci.com/g/binary-cats/laravel-bigbluebutton-webhooks/](https://scrutinizer-ci.com/g/binary-cats/laravel-bigbluebutton-webhooks/badges/quality-score.png?b=master)
 
@@ -351,7 +351,7 @@ Big shout-out to [Spatie](https://spatie.be/) for their work, which is a huge in
 
 ## Support us
 
-Binary Cats is a webdesign agency based in Illinois, US.
+[Binary Cats](https://binarycats.dev) is a webdesign agency based in Illinois, US.
 
 ## License
 
