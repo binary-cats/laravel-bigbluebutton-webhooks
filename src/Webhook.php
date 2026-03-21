@@ -16,6 +16,7 @@ class Webhook
     {
         // verify we are good, else throw an expection
         WebhookSignature::make($signature, $secret)->verify();
+
         // Make an event
         return Event::constructFrom($payload);
     }

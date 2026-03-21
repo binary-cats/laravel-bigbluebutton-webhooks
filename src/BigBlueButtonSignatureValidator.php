@@ -30,6 +30,7 @@ class BigBlueButtonSignatureValidator implements SignatureValidator
 
             return false;
         }
+
         // default
         return true;
     }
